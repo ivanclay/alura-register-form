@@ -6,12 +6,21 @@ import DeliveryAddress from './delivery-address';
 
 
 function RegisterForm({onSubmit, isCpfValid}) {
+    const [currentStep, setCurrentStep] = useState(0);
+
+    const nextStep = () => {
+        setCurrentStep(currentStep + 1);
+    }
+
+    const forms = [
+        <UserData  onSubmit={nextStep} />,
+        <PersonalData onSubmit={nextStep} isCpfValid={isCpfValid}/>,
+        <DeliveryAddress  onSubmit={onSubmit} />
+    ]
 
     return ( 
         <>
-            <PersonalData onSubmit={onSubmit} isCpfValid={isCpfValid}/>
-            <UserData/>
-            <DeliveryAddress/>
+            { forms[currentStep] }
        </>
     );
 }

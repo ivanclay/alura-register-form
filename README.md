@@ -15,6 +15,7 @@ A simple project as a way to study ReactJs.
 - [x] Create personal data form
 - [x] Create user data form
 - [x] Create delivery address from
+- [x] Create steps
 
     
 

@@ -22,6 +22,7 @@ function PersonalData({onSubmit, isCpfValid}) {
                 id="name" 
                 label="Name" 
                 variant="outlined" 
+                required
                 fullWidth
                 margin="normal" 
             /> 
@@ -31,6 +32,7 @@ function PersonalData({onSubmit, isCpfValid}) {
                 id="surname" 
                 label="Surname" 
                 variant="outlined" 
+                required
                 fullWidth 
                 margin="normal" 
             /> 
@@ -46,6 +48,7 @@ function PersonalData({onSubmit, isCpfValid}) {
                 id="cpf" 
                 label="CPF" 
                 variant="outlined" 
+                required
                 fullWidth
                 margin="normal" 
             /> 
@@ -75,7 +78,7 @@ function PersonalData({onSubmit, isCpfValid}) {
             
             
             
-            <Button type="submit" variant="contained" color="primary">Register</Button>
+            <Button type="submit" variant="contained" color="primary">Next</Button>
         </form>  
     );
 }
