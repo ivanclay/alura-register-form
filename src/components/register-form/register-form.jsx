@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import PersonalData from './personal-data';
 import UserData from './user-data';
 import DeliveryAddress from './delivery-address';
+import { Step, StepLabel, Stepper, Typography } from '@material-ui/core';
 
 
 function RegisterForm({onSubmit, isCpfValid}) {
@@ -10,8 +11,10 @@ function RegisterForm({onSubmit, isCpfValid}) {
     const [dataClient, setDataClient] = useState({});
 
     useEffect(() => {
-       console.log(dataClient); 
+        if(currentStep === forms.length){
+            onSubmit(dataClient);
         }
+     }
     );
 
     const nextStep = () => {
@@ -26,11 +29,18 @@ function RegisterForm({onSubmit, isCpfValid}) {
     const forms = [
         <UserData  onSubmit={dataCollector} />,
         <PersonalData onSubmit={dataCollector} isCpfValid={isCpfValid}/>,
-        <DeliveryAddress  onSubmit={dataCollector} />
+        <DeliveryAddress  onSubmit={dataCollector} />,
+        <Typography align="center" variant="h5">Thank you for registering!</Typography>
     ]
 
     return ( 
         <>
+            <Stepper activeStep={currentStep}>
+                <Step><StepLabel>Login</StepLabel></Step>
+                <Step><StepLabel>Personal Data</StepLabel></Step>
+                <Step><StepLabel>Delivery Data</StepLabel></Step>
+                <Step><StepLabel>Welcome</StepLabel></Step>
+            </Stepper>
             { forms[currentStep] }
        </>
     );
