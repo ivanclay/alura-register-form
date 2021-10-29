@@ -1,36 +1,22 @@
 import { TextField, Button  } from '@material-ui/core';
 import React, { useState, useContext } from 'react'
 import RegisterValidationContext from '../../contexts/register-validation-context';
+import useErrors from '../../hooks/useErrors';
 
 function UserData({ onSubmit }) {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [errors, setErrors] = useState({password: {isValid:true, text:""}});
-
     const validations = useContext(RegisterValidationContext);
 
-    const fieldsValidate = (event) => {
-        const { name, value } = event.target;
-        const newErrorsState = {...errors}
-        newErrorsState[name] = validations[name](value);
-        setErrors(newErrorsState)
-    }
+    const [errors, fieldsValidate, canNavigateForm ] = useErrors(validations);
+
 
     const onSubmitForm = (event) => {
             event.preventDefault();
             if(canNavigateForm()){
                 onSubmit({email, password});
             }
-    }
-
-    const canNavigateForm = () => {
-        for(let field in errors){
-            if(errors[field].isValid){
-                return true;
-            }
-        }
-        return false;
     }
 
     return ( 

@@ -1,5 +1,7 @@
 import { TextField, Button  } from '@material-ui/core';
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import RegisterValidationContext from '../../contexts/register-validation-context';
+import useErrors from '../../hooks/useErrors';
 
 function DeliveryAddress({ onSubmit }) {
     const [cep, setCep] = useState("");
@@ -8,11 +10,18 @@ function DeliveryAddress({ onSubmit }) {
     const [state, setState] = useState(true);
     const [city, setCity] = useState(true);
 
-    return ( 
-        <form onSubmit={(event) => {
-            event.preventDefault();
+    const validations = useContext(RegisterValidationContext);
+    const [errors, fieldsValidate, canNavigateForm ] = useErrors(validations);
+
+    const onSubmitForm = (event) => {
+        event.preventDefault();
+        if(canNavigateForm()){
             onSubmit({cep, address, number, state, city});
-        }}>
+        }
+}
+
+    return ( 
+        <form onSubmit={onSubmitForm}>
             <TextField 
                 id="cep" 
                 label="CEP" 

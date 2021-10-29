@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { TextField, Button, Switch, FormControlLabel  } from '@material-ui/core';
 import RegisterValidationContext from '../../contexts/register-validation-context';
+import useErrors from '../../hooks/useErrors';
 
 function PersonalData({ onSubmit }) {
 
@@ -9,32 +10,16 @@ function PersonalData({ onSubmit }) {
     const [cpf, setCpf] = useState("");
     const [promotions, setPromotions] = useState(true);
     const [newsletter, setNewsletter] = useState(true);
-    const [errors, setErrors] = useState({cpf: {isValid:true, text:""}});
-
     const validations = useContext(RegisterValidationContext);
 
-    const fieldsValidate = (event) => {
-        const { name, value } = event.target;
-        const newErrorsState = {...errors}
-        newErrorsState[name] = validations[name](value);
-        setErrors(newErrorsState)
-    }
+    const [errors, fieldsValidate, canNavigateForm ] = useErrors(validations);
 
     const onSubmitForm = (event) => {
         event.preventDefault();
         if(canNavigateForm()){
             onSubmit({name, surname, cpf, promotions, newsletter});
         }
-}
-
-const canNavigateForm = () => {
-    for(let field in errors){
-        if(errors[field].isValid){
-            return true;
-        }
     }
-    return false;
-}
 
     return ( 
         <form onSubmit={onSubmitForm}>
