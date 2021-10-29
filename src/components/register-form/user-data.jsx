@@ -1,7 +1,7 @@
 import { TextField, Button  } from '@material-ui/core';
 import React, { useState } from 'react'
 
-function UserData({ onSubmit }) {
+function UserData({ onSubmit, validations }) {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");

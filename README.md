@@ -18,6 +18,7 @@ A simple project as a way to study ReactJs.
 - [x] Create steps
 - [x] Add useEffect
 - [x] Add Stepper Material UI component
+- [x] Create validations file
 
     
 

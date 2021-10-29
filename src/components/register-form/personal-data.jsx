@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { TextField, Button, Switch, FormControlLabel  } from '@material-ui/core';
 
 
-function PersonalData({onSubmit, isCpfValid}) {
+function PersonalData({onSubmit, validations}) {
 
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
@@ -10,6 +10,13 @@ function PersonalData({onSubmit, isCpfValid}) {
     const [promotions, setPromotions] = useState(true);
     const [newsletter, setNewsletter] = useState(true);
     const [errors, setErrors] = useState({cpf: {isValid:true, text:""}});
+
+    const fieldsValidate = (event) => {
+        const { name, value } = event.target;
+        const newErrorsState = {...errors}
+        newErrorsState[name] = validations[name](value);
+        setErrors(newErrorsState)
+    }
 
     return ( 
         <form onSubmit={(event) => {
@@ -39,13 +46,11 @@ function PersonalData({onSubmit, isCpfValid}) {
             <TextField 
                 error={!errors.cpf.isValid}
                 helperText={errors.cpf.text}
-                onBlur={(event) => {
-                    const isValid = isCpfValid(cpf);
-                    setErrors({cpf: isValid})
-                }}
+                onBlur={fieldsValidate}
                 value={cpf}
                 onChange={(event) => {setCpf(event.target.value)}}
                 id="cpf" 
+                name="cpf" 
                 label="CPF" 
                 variant="outlined" 
                 required

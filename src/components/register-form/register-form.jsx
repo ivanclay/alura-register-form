@@ -6,7 +6,7 @@ import DeliveryAddress from './delivery-address';
 import { Step, StepLabel, Stepper, Typography } from '@material-ui/core';
 
 
-function RegisterForm({onSubmit, isCpfValid}) {
+function RegisterForm({onSubmit, validations}) {
     const [currentStep, setCurrentStep] = useState(0);
     const [dataClient, setDataClient] = useState({});
 
@@ -27,9 +27,9 @@ function RegisterForm({onSubmit, isCpfValid}) {
     }
 
     const forms = [
-        <UserData  onSubmit={dataCollector} />,
-        <PersonalData onSubmit={dataCollector} isCpfValid={isCpfValid}/>,
-        <DeliveryAddress  onSubmit={dataCollector} />,
+        <UserData  onSubmit={dataCollector} validations={validations}/>,
+        <PersonalData onSubmit={dataCollector} validations={validations}/>,
+        <DeliveryAddress  onSubmit={dataCollector} validations={validations}/>,
         <Typography align="center" variant="h5">Thank you for registering!</Typography>
     ]
 
