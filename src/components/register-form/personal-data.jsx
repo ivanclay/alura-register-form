@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { TextField, Button, Switch, FormControlLabel  } from '@material-ui/core';
+import RegisterValidationContext from '../../contexts/register-validation-context';
 
-
-function PersonalData({onSubmit, validations}) {
+function PersonalData({ onSubmit }) {
 
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
@@ -11,6 +11,8 @@ function PersonalData({onSubmit, validations}) {
     const [newsletter, setNewsletter] = useState(true);
     const [errors, setErrors] = useState({cpf: {isValid:true, text:""}});
 
+    const validations = useContext(RegisterValidationContext);
+
     const fieldsValidate = (event) => {
         const { name, value } = event.target;
         const newErrorsState = {...errors}
@@ -18,11 +20,24 @@ function PersonalData({onSubmit, validations}) {
         setErrors(newErrorsState)
     }
 
-    return ( 
-        <form onSubmit={(event) => {
-            event.preventDefault();
+    const onSubmitForm = (event) => {
+        event.preventDefault();
+        if(canNavigateForm()){
             onSubmit({name, surname, cpf, promotions, newsletter});
-        }}>
+        }
+}
+
+const canNavigateForm = () => {
+    for(let field in errors){
+        if(errors[field].isValid){
+            return true;
+        }
+    }
+    return false;
+}
+
+    return ( 
+        <form onSubmit={onSubmitForm}>
             <TextField 
                 value={name}
                 onChange={(event) => {setName(event.target.value)}}
@@ -46,11 +61,11 @@ function PersonalData({onSubmit, validations}) {
             <TextField 
                 error={!errors.cpf.isValid}
                 helperText={errors.cpf.text}
-                onBlur={fieldsValidate}
                 value={cpf}
                 onChange={(event) => {setCpf(event.target.value)}}
-                id="cpf" 
+                onBlur={fieldsValidate} 
                 name="cpf" 
+                id="cpf"
                 label="CPF" 
                 variant="outlined" 
                 required

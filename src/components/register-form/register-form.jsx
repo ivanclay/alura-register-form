@@ -27,9 +27,9 @@ function RegisterForm({onSubmit, validations}) {
     }
 
     const forms = [
-        <UserData  onSubmit={dataCollector} validations={validations}/>,
-        <PersonalData onSubmit={dataCollector} validations={validations}/>,
-        <DeliveryAddress  onSubmit={dataCollector} validations={validations}/>,
+        <UserData  onSubmit={dataCollector} />,
+        <PersonalData onSubmit={dataCollector} />,
+        <DeliveryAddress  onSubmit={dataCollector}/>,
         <Typography align="center" variant="h5">Thank you for registering!</Typography>
     ]
 
